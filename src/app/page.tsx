@@ -175,6 +175,29 @@ export default function HomePage() {
         </div>
       </section>
 
+
+      <section className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
+        <div className="flex flex-col gap-4 rounded-3xl border border-emerald-100 bg-sand-50 px-6 py-8 sm:flex-row sm:items-center sm:justify-between sm:px-10">
+          <div>
+            <p className="text-sm font-semibold uppercase tracking-wider text-emerald-700">
+              Proizvodi
+            </p>
+            <h2 className="mt-1 font-[family-name:var(--font-display)] text-2xl font-semibold text-charcoal-900">
+              Asortiman i brandovi u našim ljekarnama
+            </h2>
+            <p className="mt-2 max-w-xl text-charcoal-600">
+              Pregled dermokozmetike, dodataka prehrani i brandova koje držimo u poslovnicama —
+              uz savjet farmaceuta.
+            </p>
+          </div>
+          <Button asChild variant="outline" className="shrink-0">
+            <Link href="/proizvodi">
+              Pogledajte proizvode <ArrowRight />
+            </Link>
+          </Button>
+        </div>
+      </section>
+
       <section className="mx-auto max-w-6xl px-4 pb-16 sm:px-6">
         <div className="rounded-3xl bg-gradient-to-br from-emerald-700 to-emerald-900 px-6 py-12 text-center text-white sm:px-12">
           <h2 className="font-[family-name:var(--font-display)] text-3xl font-semibold">

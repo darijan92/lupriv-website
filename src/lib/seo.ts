@@ -144,6 +144,47 @@ export function breadcrumbJsonLd(
   };
 }
 
+
+export function collectionPageJsonLd(opts: {
+  name: string;
+  description: string;
+  path: string;
+  brandNames: string[];
+}): Record<string, unknown> {
+  return {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: opts.name,
+    description: opts.description,
+    url: `${BASE}${opts.path}`,
+    isPartOf: {
+      "@type": "WebSite",
+      name: SITE.brandName,
+      url: BASE,
+    },
+    about: {
+      "@type": "Pharmacy",
+      name: SITE.brandName,
+      address: {
+        "@type": "PostalAddress",
+        streetAddress: SITE.streetAddress,
+        addressLocality: SITE.addressLocality,
+        postalCode: SITE.postalCode,
+        addressCountry: SITE.addressCountry,
+      },
+    },
+    mainEntity: {
+      "@type": "ItemList",
+      name: "Brandovi u poslovnicama",
+      itemListElement: opts.brandNames.map((name, i) => ({
+        "@type": "ListItem",
+        position: i + 1,
+        item: { "@type": "Brand", name },
+      })),
+    },
+  };
+}
+
 /** HQ NAP — single source used by schema; mirrors SITE. */
 export const NAP = {
   brandName: SITE.brandName,

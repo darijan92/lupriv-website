@@ -91,6 +91,15 @@ export default function ServicesPage() {
         ))}
       </div>
 
+
+      <p className="mt-10 text-center text-sm text-charcoal-600">
+        Tražite brandove i asortiman?{" "}
+        <Link href="/proizvodi" className="font-medium text-emerald-800 underline-offset-4 hover:underline">
+          Pogledajte proizvode i brandove
+        </Link>
+        .
+      </p>
+
       <div className="mt-14 rounded-3xl border border-emerald-100 bg-sand-50 px-6 py-10 text-center sm:px-10">
         <h2 className="font-[family-name:var(--font-display)] text-2xl font-semibold">
           Pronađite poslovnicu ili nam pišite

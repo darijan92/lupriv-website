@@ -24,6 +24,11 @@ export const pageMeta = {
     description:
       "Kontaktirajte Ljekarne Lupriv Plus u Mostaru — telefon, e-pošta i kontakt forma. Odgovaramo na upite o receptima, pomagalima i dostavi diljem BiH.",
   },
+  proizvodi: {
+    title: "Proizvodi i brandovi u ljekarnama | Lupriv Plus Mostar",
+    description:
+      "Otkrijte asortiman i svjetske brandove u Ljekarnama Lupriv Plus u Mostaru — dermokozmetika, dodaci prehrani i zdravstveni proizvodi. Posjetite naše poslovnice.",
+  },
 } as const;
 
 export type PageMetaKey = keyof typeof pageMeta;

@@ -14,6 +14,7 @@ const nav = [
   { href: "/", label: "Početna" },
   { href: "/o-nama", label: "O nama" },
   { href: "/usluge", label: "Usluge" },
+  { href: "/proizvodi", label: "Proizvodi" },
   { href: "/poslovnice", label: "Poslovnice" },
   { href: "/kontakt", label: "Kontakt" },
 ];
