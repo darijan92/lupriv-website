@@ -6,22 +6,21 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { SITE } from "@/data/locations";
 
-export function ContactForm() {
+export function ContactForm({ email }: { email: string }) {
   const [sent, setSent] = useState(false);
 
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const data = new FormData(e.currentTarget);
     const name = String(data.get("name") || "").trim();
-    const email = String(data.get("email") || "").trim();
+    const fromEmail = String(data.get("email") || "").trim();
     const message = String(data.get("message") || "").trim();
     const subject = encodeURIComponent(`Upit s weba — ${name || "Lupriv Plus"}`);
     const body = encodeURIComponent(
-      `Ime: ${name}\nEmail: ${email}\n\nPoruka:\n${message}`
+      `Ime: ${name}\nEmail: ${fromEmail}\n\nPoruka:\n${message}`
     );
-    window.location.href = `mailto:${SITE.email}?subject=${subject}&body=${body}`;
+    window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
     setSent(true);
   }
 
@@ -60,7 +59,7 @@ export function ContactForm() {
           </Button>
           {sent && (
             <p className="text-sm text-emerald-800">
-              Otvara se vaš email klijent. Ako se nije otvorio, pišite na {SITE.email}.
+              Otvara se vaš email klijent. Ako se nije otvorio, pišite na {email}.
             </p>
           )}
         </form>

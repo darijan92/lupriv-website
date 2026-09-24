@@ -1,14 +1,17 @@
 import type { MetadataRoute } from "next";
+import { getSiteSettings } from "@/lib/payload";
 
-const BASE = "https://luprivplus.com";
 const isProd = process.env.VERCEL_ENV === "production";
 
-export default function robots(): MetadataRoute.Robots {
+export default async function robots(): Promise<MetadataRoute.Robots> {
   if (!isProd) {
     return {
       rules: { userAgent: "*", disallow: "/" },
     };
   }
+
+  const site = await getSiteSettings();
+  const BASE = site.url.replace(/\/$/, "");
 
   return {
     rules: {

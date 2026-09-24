@@ -2,7 +2,7 @@ import { Clock, Mail, MapPin, Phone, ExternalLink } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { formatHours, mapsUrl, type Location } from "@/data/locations";
+import { formatHours, mapsUrl, type Location } from "@/lib/site";
 
 export function LocationCard({ location }: { location: Location }) {
   const hours = formatHours(location.hours);

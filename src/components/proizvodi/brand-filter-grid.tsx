@@ -1,97 +1,64 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
-import { Badge } from "@/components/ui/badge";
-import {
-  brands,
-  brandCategoryLabels,
-  brandFilterChips,
-  type BrandCategory,
-} from "@/data/brands";
 import { cn } from "@/lib/utils";
+import {
+  brandFilterChips,
+  type Brand,
+  type BrandCategory,
+} from "@/lib/site";
 
-function isBrandCategory(value: string | null): value is BrandCategory {
-  return (
-    value === "dermokozmetika" ||
-    value === "dodaci" ||
-    value === "kosa" ||
-    value === "sunce" ||
-    value === "bebe"
-  );
-}
-
-export function BrandFilterGrid() {
+export function BrandFilterGrid({ brands }: { brands: Brand[] }) {
   const searchParams = useSearchParams();
-  const initial = searchParams.get("kat");
-  const [active, setActive] = useState<"svi" | BrandCategory>(
-    isBrandCategory(initial) ? initial : "svi",
-  );
-
-  useEffect(() => {
-    setActive(isBrandCategory(initial) ? initial : "svi");
-  }, [initial]);
+  const kat = searchParams.get("kat");
+  const initial: "svi" | Exclude<BrandCategory, "ostalo"> =
+    kat && brandFilterChips.some((c) => c.id === kat)
+      ? (kat as "svi" | Exclude<BrandCategory, "ostalo">)
+      : "svi";
+  const [filter, setFilter] = useState(initial);
 
   const filtered = useMemo(() => {
-    if (active === "svi") return brands;
-    return brands.filter((b) => b.categories.includes(active));
-  }, [active]);
+    if (filter === "svi") return brands;
+    return brands.filter((b) => b.categories.includes(filter));
+  }, [brands, filter]);
 
   return (
-    <div>
-      <div
-        className="flex flex-wrap gap-2"
-        role="tablist"
-        aria-label="Filtriraj brandove po kategoriji"
-      >
+    <div className="space-y-6">
+      <div className="flex flex-wrap gap-2">
         {brandFilterChips.map((chip) => (
           <button
             key={chip.id}
             type="button"
-            role="tab"
-            aria-selected={active === chip.id}
-            onClick={() => setActive(chip.id)}
+            onClick={() => setFilter(chip.id)}
             className={cn(
-              "rounded-full border px-3.5 py-1.5 text-sm font-medium transition-colors",
-              active === chip.id
-                ? "border-emerald-700 bg-emerald-700 text-white"
-                : "border-emerald-100 bg-white text-charcoal-700 hover:border-emerald-200 hover:bg-sand-50",
+              "rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors",
+              filter === chip.id
+                ? "bg-emerald-800 text-white"
+                : "bg-sand-100 text-charcoal-800 hover:bg-sand-200"
             )}
           >
             {chip.label}
           </button>
         ))}
       </div>
-
-      <ul className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      <p className="text-sm text-charcoal-600">
+        Prikazano: <strong className="text-charcoal-900">{filtered.length}</strong> brandova
+        {filter !== "svi" ? ` · ${brandFilterChips.find((c) => c.id === filter)?.label}` : ""}.
+      </p>
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         {filtered.map((brand) => (
-          <li key={brand.id}>
-            <article className="flex h-full flex-col justify-between rounded-2xl border border-emerald-100/80 bg-white p-5 shadow-sm shadow-emerald-900/5 transition hover:-translate-y-0.5 hover:shadow-md">
-              <div>
-                <h3 className="font-[family-name:var(--font-display)] text-xl font-semibold tracking-tight text-charcoal-900">
-                  {brand.name}
-                </h3>
-                <p className="mt-1.5 text-sm leading-relaxed text-charcoal-600">
-                  {brand.focus}
-                </p>
-              </div>
-              <div className="mt-4 flex flex-wrap gap-1.5">
-                {brand.categories.map((cat) => (
-                  <Badge key={cat} variant="outline" className="font-medium">
-                    {brandCategoryLabels[cat]}
-                  </Badge>
-                ))}
-              </div>
-            </article>
-          </li>
+          <div
+            key={brand.id}
+            className="rounded-2xl border border-emerald-100 bg-white px-5 py-4 shadow-sm shadow-emerald-900/5"
+          >
+            <p className="font-[family-name:var(--font-display)] text-lg font-semibold text-charcoal-900">
+              {brand.name}
+            </p>
+            <p className="mt-1 text-sm text-charcoal-600">{brand.focus}</p>
+          </div>
         ))}
-      </ul>
-
-      {filtered.length === 0 ? (
-        <p className="mt-6 text-sm text-charcoal-600">
-          Nema brandova u ovoj kategoriji. Pokušajte drugi filter.
-        </p>
-      ) : null}
+      </div>
     </div>
   );
 }

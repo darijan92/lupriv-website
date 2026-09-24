@@ -8,7 +8,7 @@ import { Logo } from "./logo";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { InstagramIcon } from "@/components/icons";
-import { SITE } from "@/data/locations";
+import type { SiteSettings } from "@/lib/site";
 
 const nav = [
   { href: "/", label: "Početna" },
@@ -19,7 +19,7 @@ const nav = [
   { href: "/kontakt", label: "Kontakt" },
 ];
 
-export function Header() {
+export function Header({ site }: { site: SiteSettings }) {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
 
@@ -45,7 +45,7 @@ export function Header() {
         </nav>
         <div className="hidden items-center gap-2 md:flex">
           <Button asChild variant="ghost" size="icon" aria-label="Instagram">
-            <a href={SITE.instagram} target="_blank" rel="noopener noreferrer">
+            <a href={site.instagram} target="_blank" rel="noopener noreferrer">
               <InstagramIcon />
             </a>
           </Button>
@@ -79,12 +79,12 @@ export function Header() {
               </Link>
             ))}
             <a
-              href={SITE.instagram}
+              href={site.instagram}
               target="_blank"
               rel="noopener noreferrer"
               className="mt-2 inline-flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-medium text-emerald-800"
             >
-              <InstagramIcon className="h-4 w-4" /> Instagram {SITE.instagramHandle}
+              <InstagramIcon className="h-4 w-4" /> Instagram {site.instagramHandle}
             </a>
           </nav>
         </div>

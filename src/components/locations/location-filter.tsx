@@ -1,38 +1,33 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { cities, locations } from "@/data/locations";
 import { LocationCard } from "./location-card";
 import { cn } from "@/lib/utils";
+import type { Location } from "@/lib/site";
 
-export function LocationFilter() {
+export function LocationFilter({ locations }: { locations: Location[] }) {
+  const cities = useMemo(
+    () => Array.from(new Set(locations.map((l) => l.city))).sort((a, b) => a.localeCompare(b, "hr")),
+    [locations]
+  );
   const [city, setCity] = useState<string>("sve");
 
-  const filtered = useMemo(() => {
-    const list = city === "sve" ? locations : locations.filter((l) => l.city === city);
-    return [...list].sort((a, b) => {
-      if (a.isDuty && !b.isDuty) return -1;
-      if (!a.isDuty && b.isDuty) return 1;
-      if (a.isHq && !b.isHq) return -1;
-      if (!a.isHq && b.isHq) return 1;
-      return Number(a.code) - Number(b.code);
-    });
-  }, [city]);
+  const filtered = city === "sve" ? locations : locations.filter((l) => l.city === city);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       <div className="flex flex-wrap gap-2">
         <button
           type="button"
           onClick={() => setCity("sve")}
           className={cn(
-            "rounded-full px-4 py-2 text-sm font-medium transition-colors",
+            "rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors",
             city === "sve"
-              ? "bg-emerald-700 text-white"
+              ? "bg-emerald-800 text-white"
               : "bg-sand-100 text-charcoal-800 hover:bg-sand-200"
           )}
         >
-          Svi gradovi ({locations.length})
+          Svi ({locations.length})
         </button>
         {cities.map((c) => {
           const count = locations.filter((l) => l.city === c).length;
@@ -42,9 +37,9 @@ export function LocationFilter() {
               type="button"
               onClick={() => setCity(c)}
               className={cn(
-                "rounded-full px-4 py-2 text-sm font-medium transition-colors",
+                "rounded-full px-3.5 py-1.5 text-sm font-medium transition-colors",
                 city === c
-                  ? "bg-emerald-700 text-white"
+                  ? "bg-emerald-800 text-white"
                   : "bg-sand-100 text-charcoal-800 hover:bg-sand-200"
               )}
             >
