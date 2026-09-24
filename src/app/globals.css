@@ -1,0 +1,61 @@
+@import "tailwindcss";
+
+:root {
+  --background: #ffffff;
+  --foreground: #1c1c1c;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-sans);
+  --font-display: var(--font-display);
+
+  --color-emerald-50: #f0faf5;
+  --color-emerald-100: #d8f3e4;
+  --color-emerald-200: #b3e6cb;
+  --color-emerald-300: #7dd3a8;
+  --color-emerald-400: #3fba7e;
+  --color-emerald-500: #1f9f64;
+  --color-emerald-600: #12804f;
+  --color-emerald-700: #0f6641;
+  --color-emerald-800: #0e5136;
+  --color-emerald-900: #0c432d;
+  --color-emerald-950: #062618;
+
+  --color-sand-50: #fbf8f3;
+  --color-sand-100: #f5efe4;
+  --color-sand-200: #e9dfcc;
+  --color-sand-300: #d9c9aa;
+
+  --color-charcoal-400: #9a9a9a;
+  --color-charcoal-600: #5c5c5c;
+  --color-charcoal-700: #3f3f3f;
+  --color-charcoal-800: #2a2a2a;
+  --color-charcoal-900: #1c1c1c;
+  --color-charcoal-950: #121212;
+
+  --color-coral-100: #ffe8df;
+  --color-coral-500: #f07850;
+  --color-coral-600: #e05d35;
+  --color-coral-800: #9a3a1f;
+
+  --color-sage-100: #e8f0e6;
+  --color-sage-500: #7a9a72;
+  --color-sage-700: #4f6b48;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+::selection {
+  background: #d8f3e4;
+  color: #0c432d;
+}

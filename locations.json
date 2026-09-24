@@ -1,0 +1,48 @@
+{
+  "source": "lupriv_new.branches + javni telefoni/email (Interpromet/ZZOHNK)",
+  "count_javne": 19,
+  "napomene": [
+    "Adrese i radno vrijeme iz lokalne baze lupriv_new.branches",
+    "Telefoni/email iz javnih izvora — baza ih nema",
+    "Isključeno: Uprava, Skl. 50, FarmaPlus (nisu javne ljekarne)",
+    "Radno vrijeme iz evidencije RV — potvrditi s klijentom za javni site",
+    "Subota: za sjedište ZZOHNK navodi 08:00–19:00; ostale subote nisu u bazi — na siteu prikaži pon–pet + napomenu za subotu gdje je poznata"
+  ],
+  "telefoni_iz_weba": {
+    "1": {"telefon": "036/332-636", "email": "oj1@luprivplus.com"},
+    "2": {"telefon": "036/348-687", "email": "oj2@luprivplus.com"},
+    "3": {"telefon": "036/486-040", "email": "oj3@luprivplus.com"},
+    "4": {"telefon": "036/328-268", "email": "oj4@luprivplus.com"},
+    "5": {"telefon": "036/326-292", "email": "oj5@luprivplus.com"},
+    "6": {"telefon": "036/319-110", "email": "oj6@luprivplus.com"},
+    "7": {"telefon": "036/771-411", "email": "oj7@luprivplus.com"},
+    "8": {"telefon": "036/753-973", "email": "oj8@luprivplus.com"},
+    "9": {"telefon": "036/807-668", "email": "oj9@luprivplus.com"},
+    "10": {"telefon": "036/862-811", "email": "oj10@luprivplus.com"},
+    "11": {"telefon": "033/216-505", "email": "oj11@luprivplus.com"},
+    "13": {"telefon": "036/323-312", "email": "oj13@luprivplus.com"},
+    "14": {"telefon": "033/237-410", "email": "oj14@luprivplus.com"},
+    "15": {"telefon": "033/616-980", "email": null}
+  },
+  "lokacije": [
+    {"sifra": "1", "naziv": "Lupriv Plus 1", "adresa": "Kralja Tomislava 4", "grad": "Mostar", "zupanija": "HNŽ", "radno_vrijeme": {"pocetak": "07:30", "kraj": "21:00", "rad_nedjeljom": false, "subota": "08:00–19:00"}, "telefon": "036/332-636", "email": "oj1@luprivplus.com", "sjedište": true, "dezurna_napomena": false},
+    {"sifra": "2", "naziv": "Lupriv Plus 2", "adresa": "Kneza Višeslava 152", "grad": "Mostar", "zupanija": "HNŽ", "radno_vrijeme": {"pocetak": "07:30", "kraj": "20:30", "rad_nedjeljom": false}, "telefon": "036/348-687", "email": "oj2@luprivplus.com"},
+    {"sifra": "3", "naziv": "Lupriv Plus 3", "adresa": "Kruševo bb", "grad": "Mostar", "zupanija": "HNŽ", "radno_vrijeme": {"pocetak": "07:30", "kraj": "20:30", "rad_nedjeljom": false}, "telefon": "036/486-040", "email": "oj3@luprivplus.com"},
+    {"sifra": "4", "naziv": "Lupriv Plus 4", "adresa": "Kardinala Stepinca 17", "grad": "Mostar", "zupanija": "HNŽ", "radno_vrijeme": {"pocetak": "07:30", "kraj": "20:30", "rad_nedjeljom": false}, "telefon": "036/328-268", "email": "oj4@luprivplus.com"},
+    {"sifra": "5", "naziv": "Lupriv Plus 5", "adresa": "Splitska 5", "grad": "Mostar", "zupanija": "HNŽ", "radno_vrijeme": {"pocetak": "07:30", "kraj": "21:00", "rad_nedjeljom": false}, "telefon": "036/326-292", "email": "oj5@luprivplus.com"},
+    {"sifra": "6", "naziv": "Lupriv Plus 6", "adresa": "Dubrovačka bb", "grad": "Mostar", "zupanija": "HNŽ", "radno_vrijeme": {"pocetak": "07:30", "kraj": "21:00", "rad_nedjeljom": false}, "telefon": "036/319-110", "email": "oj6@luprivplus.com"},
+    {"sifra": "7", "naziv": "Lupriv Plus 7", "adresa": "Kralja Tomislava bb", "grad": "Prozor - Rama", "zupanija": "HNŽ", "radno_vrijeme": {"pocetak": "08:00", "kraj": "20:00", "rad_nedjeljom": false}, "telefon": "036/771-411", "email": "oj7@luprivplus.com"},
+    {"sifra": "8", "naziv": "Lupriv Plus 8", "adresa": "Pere Bilića 56A", "grad": "Jablanica", "zupanija": "HNŽ", "radno_vrijeme": {"pocetak": "08:00", "kraj": "18:00", "rad_nedjeljom": false}, "telefon": "036/753-973", "email": "oj8@luprivplus.com"},
+    {"sifra": "9", "naziv": "Lupriv Plus 9", "adresa": "Mate Bobana bb", "grad": "Čapljina", "zupanija": "HNŽ", "radno_vrijeme": {"pocetak": "08:00", "kraj": "20:30", "rad_nedjeljom": false}, "telefon": "036/807-668", "email": "oj9@luprivplus.com"},
+    {"sifra": "10", "naziv": "Lupriv Plus 10", "adresa": "Aladinići bb", "grad": "Stolac", "zupanija": "HNŽ", "radno_vrijeme": {"pocetak": "08:00", "kraj": "20:00", "rad_nedjeljom": false}, "telefon": "036/862-811", "email": "oj10@luprivplus.com"},
+    {"sifra": "11", "naziv": "Lupriv Plus 11", "adresa": "Skenderija bb", "grad": "Sarajevo", "zupanija": "SŽ", "radno_vrijeme": {"pocetak": "08:00", "kraj": "20:00", "rad_nedjeljom": false}, "telefon": "033/216-505", "email": "oj11@luprivplus.com"},
+    {"sifra": "12", "naziv": "Lupriv Plus 12", "adresa": "Splitska bb", "grad": "Livno", "zupanija": "HBŽ", "radno_vrijeme": {"pocetak": "08:00", "kraj": "20:00", "rad_nedjeljom": false}, "telefon": null, "email": null},
+    {"sifra": "13", "naziv": "Lupriv Plus 13", "adresa": "Stjepana Radića 37", "grad": "Mostar", "zupanija": "HNŽ", "radno_vrijeme": {"pocetak": "08:00", "kraj": "23:00", "rad_nedjeljom": true}, "telefon": "036/323-312", "email": "oj13@luprivplus.com", "dezurna": true},
+    {"sifra": "14", "naziv": "Lupriv Plus 14", "adresa": "Obala Isa-bega Ishakovića 7", "grad": "Sarajevo", "zupanija": "SŽ", "radno_vrijeme": {"pocetak": "08:00", "kraj": "20:00", "rad_nedjeljom": false}, "telefon": "033/237-410", "email": "oj14@luprivplus.com"},
+    {"sifra": "15", "naziv": "Lupriv Plus 15", "adresa": "Milana Preloga 2A", "grad": "Sarajevo", "zupanija": "SŽ", "radno_vrijeme": {"pocetak": "08:00", "kraj": "20:00", "rad_nedjeljom": false}, "telefon": "033/616-980", "email": null},
+    {"sifra": "16", "naziv": "Lupriv Plus 16", "adresa": "Igmanskih bataljona 3", "grad": "Hrasnica, Ilidža", "zupanija": "SŽ", "radno_vrijeme": {"pocetak": "08:00", "kraj": "20:00", "rad_nedjeljom": false}, "telefon": null, "email": null},
+    {"sifra": "17", "naziv": "Lupriv Plus 17", "adresa": "Vukovarska 43", "grad": "Posušje", "zupanija": "ŽZH", "radno_vrijeme": {"pocetak": "08:00", "kraj": "20:30", "rad_nedjeljom": false}, "telefon": null, "email": null},
+    {"sifra": "18", "naziv": "Lupriv Plus 18", "adresa": "Adema Buće 206", "grad": "Sarajevo", "zupanija": "SŽ", "radno_vrijeme": {"pocetak": "08:00", "kraj": "20:00", "rad_nedjeljom": false}, "telefon": null, "email": null},
+    {"sifra": "19", "naziv": "Lupriv Plus 19", "adresa": "Knešpolje bb", "grad": "Široki Brijeg", "zupanija": "ŽZH", "radno_vrijeme": {"pocetak": "08:00", "kraj": "20:00", "rad_nedjeljom": false}, "telefon": null, "email": null}
+  ]
+}
