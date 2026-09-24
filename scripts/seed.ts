@@ -1,15 +1,45 @@
-import 'dotenv/config'
 import { config as loadEnv } from 'dotenv'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { getPayload } from 'payload'
 
-// Load .env.local as well
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
-loadEnv({ path: path.resolve(__dirname, '../.env.local') })
-loadEnv({ path: path.resolve(__dirname, '../.env') })
+const root = path.resolve(__dirname, '..')
 
-import config from '../src/payload.config'
+/** Load env files without printing values. Existing process.env keys win (no override). */
+function loadEnvFiles() {
+  // Prefer explicit local overrides first, then .env, then optional Atlas helper file.
+  loadEnv({ path: path.join(root, '.env.local') , quiet: true })
+  loadEnv({ path: path.join(root, '.env') , quiet: true })
+  // Merge missing keys only. Prefer explicit DATABASE_URL in .env.local — never log secret values.
+  loadEnv({ path: path.join(root, '.atlas-credentials.env'), override: false , quiet: true })
+
+  // If DATABASE_URL unset but Atlas MONGODB_URI is present, use it (production convenience).
+  if (!process.env.DATABASE_URL?.trim() && process.env.MONGODB_URI?.trim()) {
+    process.env.DATABASE_URL = process.env.MONGODB_URI.trim()
+  }
+}
+
+function assertMongoDatabaseUrl(): string {
+  const raw = process.env.DATABASE_URL?.trim()
+  if (!raw) {
+    console.error(
+      'DATABASE_URL is missing. Set it in .env.local (local Docker) or point it at Atlas. See .env.example and README.',
+    )
+    process.exit(1)
+  }
+  if (!/^mongodb(\+srv)?:\/\//i.test(raw)) {
+    console.error(
+      'DATABASE_URL must be a MongoDB URL (mongodb:// or mongodb+srv://). Got a non-Mongo scheme — SQLite/file: is no longer supported.',
+    )
+    process.exit(1)
+  }
+  return raw
+}
+
+function redactMongoUrl(url: string): string {
+  return url.replace(/^(mongodb(?:\+srv)?:\/\/)([^@\/]+)@/i, '$1***@')
+}
 
 const locationsSeed = [
   { code: '1', name: 'Lupriv Plus 1', address: 'Kralja Tomislava 4', city: 'Mostar', canton: 'HNŽ', hours: { start: '07:30', end: '21:00', sunday: false, saturday: '08:00–19:00' }, phone: '036/332-636', email: 'oj1@luprivplus.com', isHq: true, isDuty: false, sort: 1 },
@@ -236,6 +266,14 @@ async function upsertByField(
 }
 
 async function run() {
+  loadEnvFiles()
+  const databaseUrl = assertMongoDatabaseUrl()
+  const seedMode = process.env.SEED_MODE?.trim() || 'local'
+  console.log(`Seed mode: ${seedMode}`)
+  console.log(`Database: ${redactMongoUrl(databaseUrl)}`)
+
+  // Dynamic import so payload.config reads env after loadEnvFiles()
+  const { default: config } = await import('../src/payload.config')
   const payload = await getPayload({ config })
 
   console.log('Seeding site-settings…')

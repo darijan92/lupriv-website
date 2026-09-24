@@ -46,3 +46,6 @@ payload.db
 payload.db-*
 *.db
 media/
+
+# Atlas / Mongo credentials (never commit)
+.atlas-credentials.env

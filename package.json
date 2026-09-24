@@ -13,7 +13,7 @@
     "seed": "cross-env NODE_OPTIONS=--no-deprecation tsx --env-file=.env.local scripts/seed.ts"
   },
   "dependencies": {
-    "@payloadcms/db-sqlite": "3.90.2",
+    "@payloadcms/db-mongodb": "3.90.2",
     "@payloadcms/next": "3.90.2",
     "@payloadcms/richtext-lexical": "3.90.2",
     "@radix-ui/react-dialog": "^1.1.23",

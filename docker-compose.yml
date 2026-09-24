@@ -1,0 +1,15 @@
+services:
+  mongo:
+    image: mongo:7
+    container_name: lupriv-mongo
+    ports:
+      # Host 27018 — 27017 is often taken by other local Mongo containers
+      - '27018:27017'
+    volumes:
+      - lupriv_mongo_data:/data/db
+    environment:
+      MONGO_INITDB_DATABASE: lupriv-website
+    restart: unless-stopped
+
+volumes:
+  lupriv_mongo_data:

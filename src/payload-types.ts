@@ -94,7 +94,7 @@ export interface Config {
     'payload-migrations': PayloadMigrationsSelect<false> | PayloadMigrationsSelect<true>;
   };
   db: {
-    defaultIDType: number;
+    defaultIDType: string;
   };
   fallbackLocale: null;
   globals: {
@@ -136,7 +136,7 @@ export interface UserAuthOperations {
  * via the `definition` "users".
  */
 export interface User {
-  id: number;
+  id: string;
   name?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -163,7 +163,7 @@ export interface User {
  * via the `definition` "media".
  */
 export interface Media {
-  id: number;
+  id: string;
   alt: string;
   updatedAt: string;
   createdAt: string;
@@ -182,7 +182,7 @@ export interface Media {
  * via the `definition` "locations".
  */
 export interface Location {
-  id: number;
+  id: string;
   code: string;
   name: string;
   address: string;
@@ -207,7 +207,7 @@ export interface Location {
  * via the `definition` "brands".
  */
 export interface Brand {
-  id: number;
+  id: string;
   name: string;
   slug: string;
   focus: string;
@@ -222,7 +222,7 @@ export interface Brand {
  * via the `definition` "services".
  */
 export interface Service {
-  id: number;
+  id: string;
   title: string;
   slug: string;
   description: string;
@@ -242,7 +242,7 @@ export interface Service {
  * via the `definition` "product-categories".
  */
 export interface ProductCategory {
-  id: number;
+  id: string;
   title: string;
   slug: string;
   description: string;
@@ -260,7 +260,7 @@ export interface ProductCategory {
  * via the `definition` "pages".
  */
 export interface Page {
-  id: number;
+  id: string;
   slug: 'home' | 'o-nama' | 'usluge' | 'proizvodi' | 'poslovnice' | 'kontakt';
   title: string;
   metaDescription: string;
@@ -304,7 +304,7 @@ export interface Page {
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
-  id: number;
+  id: string;
   key: string;
   data:
     | {
@@ -321,40 +321,40 @@ export interface PayloadKv {
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
-  id: number;
+  id: string;
   document?:
     | ({
         relationTo: 'users';
-        value: number | User;
+        value: string | User;
       } | null)
     | ({
         relationTo: 'media';
-        value: number | Media;
+        value: string | Media;
       } | null)
     | ({
         relationTo: 'locations';
-        value: number | Location;
+        value: string | Location;
       } | null)
     | ({
         relationTo: 'brands';
-        value: number | Brand;
+        value: string | Brand;
       } | null)
     | ({
         relationTo: 'services';
-        value: number | Service;
+        value: string | Service;
       } | null)
     | ({
         relationTo: 'product-categories';
-        value: number | ProductCategory;
+        value: string | ProductCategory;
       } | null)
     | ({
         relationTo: 'pages';
-        value: number | Page;
+        value: string | Page;
       } | null);
   globalSlug?: string | null;
   user: {
     relationTo: 'users';
-    value: number | User;
+    value: string | User;
   };
   updatedAt: string;
   createdAt: string;
@@ -364,10 +364,10 @@ export interface PayloadLockedDocument {
  * via the `definition` "payload-preferences".
  */
 export interface PayloadPreference {
-  id: number;
+  id: string;
   user: {
     relationTo: 'users';
-    value: number | User;
+    value: string | User;
   };
   key?: string | null;
   value?:
@@ -387,7 +387,7 @@ export interface PayloadPreference {
  * via the `definition` "payload-migrations".
  */
 export interface PayloadMigration {
-  id: number;
+  id: string;
   name?: string | null;
   batch?: number | null;
   updatedAt: string;
@@ -593,7 +593,7 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
  * via the `definition` "site-settings".
  */
 export interface SiteSetting {
-  id: number;
+  id: string;
   brandName: string;
   legalName: string;
   name: string;
