@@ -1,17 +1,16 @@
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
   Clock,
   HeartPulse,
-  MapPin,
   Package,
   ShieldCheck,
   Sparkles,
   Stethoscope,
-  Truck,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { InstagramIcon } from "@/components/icons";
 import { SITE } from "@/data/locations";
@@ -36,6 +35,8 @@ const services = [
     icon: Sparkles,
     title: "Dermokozmetika",
     desc: "Njega kože uz proizvode koje preporučujemo s povjerenjem — za osjetljivu kožu, svakodnevnu njegu i ciljane potrebe.",
+    image: "/images/skincare.jpg",
+    imageAlt: "Proizvodi za njegu kože",
   },
 ];
 
@@ -76,68 +77,56 @@ export default function HomePage() {
               <InstagramIcon className="h-4 w-4" /> {SITE.instagramHandle}
             </a>
           </div>
-          <div className="grid gap-4 sm:grid-cols-2">
-            <Card className="bg-emerald-800 text-white border-0 shadow-lg shadow-emerald-900/20 sm:col-span-2">
-              <CardHeader className="pb-2">
-                <CardTitle className="text-white text-xl font-[family-name:var(--font-display)]">
-                  Zašto Lupriv Plus
-                </CardTitle>
-              </CardHeader>
-              <CardContent className="grid gap-4 sm:grid-cols-3 text-sm text-emerald-50/95">
-                <p className="flex items-start gap-2">
-                  <ShieldCheck className="mt-0.5 h-4 w-4 shrink-0" />
-                  <span>
-                    <strong className="block text-white">Tradicija od 1994.</strong>
-                    pouzdano iskustvo i kontinuitet skrbi
-                  </span>
-                </p>
-                <p className="flex items-start gap-2">
-                  <Stethoscope className="mt-0.5 h-4 w-4 shrink-0" />
-                  <span>
-                    <strong className="block text-white">Ugovorna ZZO ljekarna</strong>
-                    recepti i savjetovanje koje možete očekivati
-                  </span>
-                </p>
-                <p className="flex items-start gap-2">
-                  <Clock className="mt-0.5 h-4 w-4 shrink-0" />
-                  <span>
-                    <strong className="block text-white">Dežurna poslovnica</strong>
-                    Stjepana Radića 37, Mostar
-                  </span>
-                </p>
-              </CardContent>
-            </Card>
-            <Card className="bg-sand-50 border-sand-200">
-              <CardHeader>
-                <MapPin className="mb-2 h-8 w-8 text-emerald-700" />
-                <CardTitle className="text-base">Mreža poslovnica</CardTitle>
-                <CardDescription>Mostar, Sarajevo, Rama, Jablanica, Čapljina, Livno, Posušje i šire.</CardDescription>
-              </CardHeader>
-            </Card>
-            <Card className="bg-white">
-              <CardHeader>
-                <Truck className="mb-2 h-8 w-8 text-emerald-700" />
-                <CardTitle className="text-base">Dostava diljem BiH</CardTitle>
-                <CardDescription>
-                  Poštarina {SITE.deliveryFee}; besplatno iznad {SITE.freeDeliveryOver}.
-                </CardDescription>
-              </CardHeader>
-            </Card>
+
+          <div className="relative mx-auto w-full max-w-lg lg:max-w-none">
+            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl shadow-xl shadow-emerald-900/10 sm:aspect-[5/4] lg:aspect-[4/5]">
+              <Image
+                src="/images/hero-pharmacy.jpg"
+                alt="Mirna unutrašnjost ljekarne"
+                fill
+                priority
+                sizes="(max-width: 1024px) 90vw, 480px"
+                className="object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-emerald-950/55 via-emerald-900/15 to-transparent" />
+            </div>
+
+            <div className="absolute left-3 top-3 flex max-w-[min(100%-1.5rem,16rem)] flex-col gap-2 sm:left-4 sm:top-4">
+              <div className="inline-flex items-center gap-2 rounded-2xl bg-white/95 px-3 py-2 text-sm shadow-md shadow-emerald-900/10 backdrop-blur-sm">
+                <ShieldCheck className="h-4 w-4 shrink-0 text-emerald-700" />
+                <span className="font-medium text-charcoal-800">Tradicija od 1994.</span>
+              </div>
+              <div className="inline-flex items-center gap-2 rounded-2xl bg-white/95 px-3 py-2 text-sm shadow-md shadow-emerald-900/10 backdrop-blur-sm">
+                <Clock className="h-4 w-4 shrink-0 text-emerald-700" />
+                <span className="font-medium text-charcoal-800">Dežurna · Radića 37</span>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       <section className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
-        <div className="max-w-3xl space-y-4">
-          <p className="text-sm font-semibold uppercase tracking-wider text-emerald-700">O nama</p>
-          <p className="text-lg leading-relaxed text-charcoal-700">
-            Lupriv Plus mjesto je gdje zdravlje nije samo recept na papiru. U našim poslovnicama
-            dobivate lijekove, stručni farmaceutski savjet i proizvode za svakodnevnu brigu o sebi i
-            obitelji. Radimo s povjerenjem koje se gradi godinama — jasno, topla i dostupno.
-          </p>
-          <Button asChild variant="outline">
-            <Link href="/o-nama">Više o nama</Link>
-          </Button>
+        <div className="grid items-center gap-8 lg:grid-cols-5 lg:gap-12">
+          <div className="relative aspect-[4/3] overflow-hidden rounded-2xl shadow-lg shadow-emerald-900/10 lg:col-span-2">
+            <Image
+              src="/images/consultation.jpg"
+              alt="Farmaceutsko savjetovanje"
+              fill
+              sizes="(max-width: 1024px) 90vw, 40vw"
+              className="object-cover"
+            />
+          </div>
+          <div className="space-y-4 lg:col-span-3">
+            <p className="text-sm font-semibold uppercase tracking-wider text-emerald-700">O nama</p>
+            <p className="text-lg leading-relaxed text-charcoal-700">
+              Lupriv Plus mjesto je gdje zdravlje nije samo recept na papiru. U našim poslovnicama
+              dobivate lijekove, stručni farmaceutski savjet i proizvode za svakodnevnu brigu o sebi i
+              obitelji. Radimo s povjerenjem koje se gradi godinama — jasno, topla i dostupno.
+            </p>
+            <Button asChild variant="outline">
+              <Link href="/o-nama">Više o nama</Link>
+            </Button>
+          </div>
         </div>
       </section>
 
@@ -158,7 +147,22 @@ export default function HomePage() {
         </div>
         <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {services.map((s) => (
-            <Card key={s.title} className="transition hover:-translate-y-0.5 hover:shadow-md">
+            <Card
+              key={s.title}
+              className="overflow-hidden transition hover:-translate-y-0.5 hover:shadow-md"
+            >
+              {"image" in s && s.image ? (
+                <div className="relative h-28 w-full">
+                  <Image
+                    src={s.image}
+                    alt={s.imageAlt ?? ""}
+                    fill
+                    sizes="(max-width: 640px) 100vw, 25vw"
+                    className="object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-white/40 to-transparent" />
+                </div>
+              ) : null}
               <CardHeader>
                 <div className="mb-2 flex h-11 w-11 items-center justify-center rounded-2xl bg-emerald-50 text-emerald-700">
                   <s.icon className="h-5 w-5" />

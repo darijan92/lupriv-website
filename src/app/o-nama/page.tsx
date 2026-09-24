@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -12,39 +13,52 @@ export default function AboutPage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
       <JsonLd data={breadcrumbJsonLd([{ name: "O nama", path: "/o-nama" }])} />
-      <div className="max-w-3xl space-y-6">
-        <p className="text-sm font-semibold uppercase tracking-wider text-emerald-700">O nama</p>
-        <h1 className="font-[family-name:var(--font-display)] text-4xl font-semibold tracking-tight text-charcoal-900">
-          O Ljekarnama Lupriv Plus
-        </h1>
-        <div className="space-y-4 text-lg leading-relaxed text-charcoal-700">
-          <p>
-            Ljekarne Lupriv Plus nastavljaju tradiciju koja u Mostaru traje od{" "}
-            <strong className="font-semibold text-charcoal-900">1994.</strong> Godinama smo uz
-            pacijente, obitelji i susjede: od prvog savjeta do redovite terapije, od dječjeg sirupa
-            do pomagala koja olakšavaju svakodnevicu.
-          </p>
-          <p>
-            Sjedište nam je na{" "}
-            <strong className="font-semibold text-charcoal-900">{SITE.streetAddress}</strong> u
-            Mostaru. Iz tog središta vodimo mrežu poslovnica diljem BiH, uz ugovorni odnos sa
-            Zavodima zdravstvenog osiguranja. Dežurna poslovnica na{" "}
-            <strong className="font-semibold text-charcoal-900">Stjepana Radića 37</strong> tu je
-            kad vam treba izvan uobičajenog ritma.
-          </p>
-          <p>
-            Naš cilj jednostavan je: da se u ljekarni osjećate sigurno i dobrodošli. Slušamo,
-            savjetujemo i pomažemo vam da odaberete ono što vam stvarno treba — bez žurbe i bez
-            hladnog žargona.
-          </p>
+      <div className="grid items-start gap-8 lg:grid-cols-5 lg:gap-12">
+        <div className="max-w-3xl space-y-6 lg:col-span-3">
+          <p className="text-sm font-semibold uppercase tracking-wider text-emerald-700">O nama</p>
+          <h1 className="font-[family-name:var(--font-display)] text-4xl font-semibold tracking-tight text-charcoal-900">
+            O Ljekarnama Lupriv Plus
+          </h1>
+          <div className="space-y-4 text-lg leading-relaxed text-charcoal-700">
+            <p>
+              Ljekarne Lupriv Plus nastavljaju tradiciju koja u Mostaru traje od{" "}
+              <strong className="font-semibold text-charcoal-900">1994.</strong> Godinama smo uz
+              pacijente, obitelji i susjede: od prvog savjeta do redovite terapije, od dječjeg sirupa
+              do pomagala koja olakšavaju svakodnevicu.
+            </p>
+            <p>
+              Sjedište nam je na{" "}
+              <strong className="font-semibold text-charcoal-900">{SITE.streetAddress}</strong> u
+              Mostaru. Iz tog središta vodimo mrežu poslovnica diljem BiH, uz ugovorni odnos sa
+              Zavodima zdravstvenog osiguranja. Dežurna poslovnica na{" "}
+              <strong className="font-semibold text-charcoal-900">Stjepana Radića 37</strong> tu je
+              kad vam treba izvan uobičajenog ritma.
+            </p>
+            <p>
+              Naš cilj jednostavan je: da se u ljekarni osjećate sigurno i dobrodošli. Slušamo,
+              savjetujemo i pomažemo vam da odaberete ono što vam stvarno treba — bez žurbe i bez
+              hladnog žargona.
+            </p>
+          </div>
+          <div className="flex flex-wrap gap-3 pt-2">
+            <Button asChild>
+              <Link href="/poslovnice">Pronađite poslovnicu</Link>
+            </Button>
+            <Button asChild variant="outline">
+              <Link href="/kontakt">Javite nam se</Link>
+            </Button>
+          </div>
         </div>
-        <div className="flex flex-wrap gap-3 pt-2">
-          <Button asChild>
-            <Link href="/poslovnice">Pronađite poslovnicu</Link>
-          </Button>
-          <Button asChild variant="outline">
-            <Link href="/kontakt">Javite nam se</Link>
-          </Button>
+
+        <div className="relative aspect-[3/4] overflow-hidden rounded-2xl shadow-lg shadow-emerald-900/10 lg:col-span-2 lg:sticky lg:top-24">
+          <Image
+            src="/images/soft-green.jpg"
+            alt="Mirni biljni detalji"
+            fill
+            sizes="(max-width: 1024px) 90vw, 40vw"
+            className="object-cover"
+            priority
+          />
         </div>
       </div>
 

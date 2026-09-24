@@ -81,6 +81,9 @@ export function Footer() {
             {SITE.freeDeliveryOver}
           </p>
         </div>
+        <p className="mx-auto max-w-6xl px-4 pb-4 text-[10px] text-sand-200/40 sm:px-6">
+          Fotografije: Unsplash
+        </p>
       </div>
     </footer>
   );

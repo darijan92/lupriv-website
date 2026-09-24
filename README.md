@@ -41,3 +41,6 @@ pnpm start   # pokreni build
 - Tradicija od 1994. (bez spomena Pharm)
 - Kontakt forma je mailto stub (nema backend)
 - Dev server može biti na portu 3456 ako je već pokrenut
+
+## Slike
+Fotografije u `public/images/` su iz Unsplash-a (besplatna licenca).
