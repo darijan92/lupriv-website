@@ -2,7 +2,10 @@ import type { Metadata } from "next";
 import { DM_Sans, Fraunces } from "next/font/google";
 import { Header } from "@/components/layout/header";
 import { Footer } from "@/components/layout/footer";
+import { JsonLd } from "@/components/json-ld";
 import { SITE } from "@/data/locations";
+import { pageMeta } from "@/data/page-meta";
+import { organizationJsonLd } from "@/lib/seo";
 import "./globals.css";
 
 const sans = DM_Sans({
@@ -19,16 +22,17 @@ const display = Fraunces({
 
 export const metadata: Metadata = {
   title: {
-    default: "Ljekarne Lupriv Plus | Mostar i BiH od 1994.",
+    default: pageMeta.home.title,
     template: "%s | Lupriv Plus",
   },
-  description:
-    "Ljekarne Lupriv Plus — recepti, farmaceutsko savjetovanje, ortopedska pomagala i dostava diljem BiH. Tradicija od 1994. Pronađite poslovnicu ili nas kontaktirajte.",
-  metadataBase: new URL("https://luprivplus.com"),
+  description: pageMeta.home.description,
+  metadataBase: new URL(SITE.url),
+  alternates: { canonical: "/" },
   openGraph: {
-    title: "Ljekarne Lupriv Plus | Mostar i BiH od 1994.",
-    description:
-      "Ljekarne Lupriv Plus — recepti, farmaceutsko savjetovanje, ortopedska pomagala i dostava diljem BiH. Tradicija od 1994.",
+    title: pageMeta.home.title,
+    description: pageMeta.home.description,
+    url: "/",
+    siteName: SITE.brandName,
     locale: "hr_BA",
     type: "website",
   },
@@ -38,6 +42,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="hr" className={`${sans.variable} ${display.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-white text-charcoal-900 font-sans">
+        <JsonLd data={organizationJsonLd()} />
         <div className="bg-emerald-800 text-center text-xs sm:text-sm text-emerald-50 px-4 py-2">
           Dostava diljem BiH · poštarina {SITE.deliveryFee} · besplatno iznad{" "}
           {SITE.freeDeliveryOver}

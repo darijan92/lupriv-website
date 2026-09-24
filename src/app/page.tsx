@@ -51,7 +51,7 @@ export default function HomePage() {
               Tradicija od 1994.
             </Badge>
             <h1 className="font-[family-name:var(--font-display)] text-4xl font-semibold tracking-tight text-charcoal-900 sm:text-5xl lg:text-[3.25rem] leading-[1.1]">
-              Vaša ljekarna u Mostaru i BiH
+              Ljekarne Lupriv Plus — Mostar i BiH od 1994.
             </h1>
             <p className="max-w-xl text-base leading-relaxed text-charcoal-600 sm:text-lg">
               Od 1994. uz vas — recepti, savjeti, ortopedska pomagala i briga o zdravlju cijele

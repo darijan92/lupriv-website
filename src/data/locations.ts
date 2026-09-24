@@ -58,8 +58,20 @@ export const HQ = locations.find((l) => l.isHq) ?? locations[0];
 
 export const SITE = {
   name: "Lupriv Plus",
+  brandName: "Ljekarne Lupriv Plus",
   legalName: "LJZU Lupriv Plus Mostar",
+  url: "https://luprivplus.com",
   email: "luprivplus@luprivplus.com",
+  /** Display phone (HQ) — single NAP source */
+  phoneDisplay: "036/332-636",
+  /** E.164 for schema / tel: links */
+  phoneE164: "+387-36-332-636",
+  streetAddress: "Kralja Tomislava 4",
+  addressLocality: "Mostar",
+  postalCode: "88000",
+  addressCountry: "BA",
+  /** Human-readable one-liner for footer / kontakt */
+  addressLine: "Kralja Tomislava 4, Mostar",
   instagram: "https://www.instagram.com/lupriv_plus",
   instagramHandle: "@lupriv_plus",
   deliveryFee: "7 KM",

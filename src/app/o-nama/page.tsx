@@ -2,21 +2,20 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { JsonLd } from "@/components/json-ld";
 import { SITE } from "@/data/locations";
+import { breadcrumbJsonLd, buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "O nama",
-  description:
-    "Ljekarne Lupriv Plus nastavljaju tradiciju koja u Mostaru traje od 1994. Sjedište Kralja Tomislava 4.",
-};
+export const metadata: Metadata = buildPageMetadata("oNama", "/o-nama");
 
 export default function AboutPage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+      <JsonLd data={breadcrumbJsonLd([{ name: "O nama", path: "/o-nama" }])} />
       <div className="max-w-3xl space-y-6">
         <p className="text-sm font-semibold uppercase tracking-wider text-emerald-700">O nama</p>
         <h1 className="font-[family-name:var(--font-display)] text-4xl font-semibold tracking-tight text-charcoal-900">
-          Uz vas od 1994.
+          O Ljekarnama Lupriv Plus
         </h1>
         <div className="space-y-4 text-lg leading-relaxed text-charcoal-700">
           <p>
@@ -27,7 +26,7 @@ export default function AboutPage() {
           </p>
           <p>
             Sjedište nam je na{" "}
-            <strong className="font-semibold text-charcoal-900">Kralja Tomislava 4</strong> u
+            <strong className="font-semibold text-charcoal-900">{SITE.streetAddress}</strong> u
             Mostaru. Iz tog središta vodimo mrežu poslovnica diljem BiH, uz ugovorni odnos sa
             Zavodima zdravstvenog osiguranja. Dežurna poslovnica na{" "}
             <strong className="font-semibold text-charcoal-900">Stjepana Radića 37</strong> tu je

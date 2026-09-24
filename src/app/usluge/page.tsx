@@ -11,13 +11,11 @@ import {
 import { Button } from "@/components/ui/button";
 import { Card, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { JsonLd } from "@/components/json-ld";
 import { SITE } from "@/data/locations";
+import { breadcrumbJsonLd, buildPageMetadata } from "@/lib/seo";
 
-export const metadata: Metadata = {
-  title: "Usluge",
-  description:
-    "Recepti, farmaceutsko savjetovanje, ortopedska pomagala, dermokozmetika, dodaci prehrani i dostava diljem BiH.",
-};
+export const metadata: Metadata = buildPageMetadata("usluge", "/usluge");
 
 const services = [
   {
@@ -61,10 +59,11 @@ const services = [
 export default function ServicesPage() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
+      <JsonLd data={breadcrumbJsonLd([{ name: "Usluge", path: "/usluge" }])} />
       <div className="max-w-3xl space-y-4">
         <p className="text-sm font-semibold uppercase tracking-wider text-emerald-700">Usluge</p>
         <h1 className="font-[family-name:var(--font-display)] text-4xl font-semibold tracking-tight">
-          Što nudimo
+          Usluge ljekarni Lupriv Plus
         </h1>
         <p className="text-lg text-charcoal-600 leading-relaxed">
           Od recepta i savjeta do pomagala i dostave — sve na jednom mjestu.

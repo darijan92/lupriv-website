@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { Logo } from "./logo";
 import { InstagramIcon } from "@/components/icons";
-import { HQ, SITE } from "@/data/locations";
+import { SITE } from "@/data/locations";
 
 export function Footer() {
   return (
@@ -56,16 +56,14 @@ export function Footer() {
           <ul className="space-y-3 text-sm text-sand-200/80">
             <li className="flex gap-2">
               <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
-              <span>Kralja Tomislava 4, Mostar</span>
+              <span>{SITE.addressLine}</span>
             </li>
-            {HQ.phone && (
-              <li className="flex gap-2">
-                <Phone className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
-                <a href={`tel:${HQ.phone.replace(/\//g, "")}`} className="hover:text-white">
-                  {HQ.phone}
-                </a>
-              </li>
-            )}
+            <li className="flex gap-2">
+              <Phone className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
+              <a href={`tel:${SITE.phoneE164}`} className="hover:text-white">
+                {SITE.phoneDisplay}
+              </a>
+            </li>
             <li className="flex gap-2">
               <Mail className="mt-0.5 h-4 w-4 shrink-0 text-emerald-400" />
               <a href={`mailto:${SITE.email}`} className="hover:text-white">
