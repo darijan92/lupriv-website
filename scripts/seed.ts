@@ -3,6 +3,7 @@ import fs from 'fs/promises'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { getPayload } from 'payload'
+import { sanitizeDatabaseUrl } from '../src/lib/sanitize-database-url'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const root = path.resolve(__dirname, '..')
@@ -22,7 +23,7 @@ function loadEnvFiles() {
 }
 
 function assertMongoDatabaseUrl(): string {
-  const raw = process.env.DATABASE_URL?.trim()
+  const raw = sanitizeDatabaseUrl(process.env.DATABASE_URL ?? '')
   if (!raw) {
     console.error(
       'DATABASE_URL is missing. Set it in .env.local (local Docker) or point it at Atlas. See .env.example and README.',

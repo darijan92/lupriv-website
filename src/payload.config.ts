@@ -15,11 +15,12 @@ import { ProductCategories } from './collections/ProductCategories'
 import { Pages } from './collections/Pages'
 import { SiteSettings } from './globals/SiteSettings'
 import { buildS3FileUrl } from './lib/build-s3-file-url'
+import { sanitizeDatabaseUrl } from './lib/sanitize-database-url'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
 
-const databaseURL = process.env.DATABASE_URL
+const databaseURL = sanitizeDatabaseUrl(process.env.DATABASE_URL ?? '')
 if (!databaseURL) {
   throw new Error(
     'DATABASE_URL is required (MongoDB connection string). See .env.example — e.g. mongodb://127.0.0.1:27018/lupriv-website',
