@@ -2,6 +2,7 @@ import { cache } from 'react'
 import { unstable_cache } from 'next/cache'
 import { getPayload } from 'payload'
 import configPromise from '@payload-config'
+import { resolvePublicSiteUrl } from '@/lib/public-site-url'
 import type {
   Brand,
   BrandCategory,
@@ -69,7 +70,7 @@ function mapSite(doc: Record<string, unknown>): SiteSettings {
     name: String(doc.name ?? ''),
     brandName: String(doc.brandName ?? ''),
     legalName: String(doc.legalName ?? ''),
-    url: String(doc.url ?? ''),
+    url: resolvePublicSiteUrl(doc.url),
     email: String(doc.email ?? ''),
     phoneDisplay: String(doc.phoneDisplay ?? ''),
     phoneE164: String(doc.phoneE164 ?? ''),
