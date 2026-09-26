@@ -1,4 +1,5 @@
 import { config as loadEnv } from 'dotenv'
+import fs from 'fs/promises'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import { getPayload } from 'payload'
@@ -39,6 +40,108 @@ function assertMongoDatabaseUrl(): string {
 
 function redactMongoUrl(url: string): string {
   return url.replace(/^(mongodb(?:\+srv)?:\/\/)([^@\/]+)@/i, '$1***@')
+}
+
+const SEED_ASSETS_DIR = path.join(root, 'scripts', 'seed-assets')
+const SKINCARE_FILENAME = 'skincare.jpg'
+const IMAGE_EXTENSIONS = new Set(['.jpg', '.jpeg', '.png', '.webp', '.gif', '.svg'])
+const MEDIA_ALTS: Record<string, string> = {
+  'skincare.jpg': 'Proizvodi za njegu kože',
+}
+
+type PayloadClient = Awaited<ReturnType<typeof getPayload>>
+
+type SeedMediaFile = {
+  data: Buffer
+  mimetype: string
+  name: string
+  size: number
+}
+
+function getMimeTypeFromFilename(filename: string): string {
+  const extension = path.extname(filename).toLowerCase()
+  if (extension === '.jpg' || extension === '.jpeg') return 'image/jpeg'
+  if (extension === '.png') return 'image/png'
+  if (extension === '.webp') return 'image/webp'
+  if (extension === '.gif') return 'image/gif'
+  if (extension === '.svg') return 'image/svg+xml'
+  return 'application/octet-stream'
+}
+
+function getAltFromFilename(filename: string): string {
+  const mappedAlt = MEDIA_ALTS[filename] ?? MEDIA_ALTS[filename.toLowerCase()]
+  if (mappedAlt) return mappedAlt
+  return path.basename(filename, path.extname(filename)).replace(/[-_]+/g, ' ')
+}
+
+function getStoredFilenameCandidates(filename: string): string[] {
+  const lower = filename.toLowerCase()
+  const extension = path.extname(lower)
+  const stem = path.basename(lower, extension)
+  const names = [filename, lower]
+  if (extension !== '.svg') {
+    names.push(`${stem}.webp`)
+  }
+  return [...new Set(names)]
+}
+
+async function listSeedAssetFiles(): Promise<string[]> {
+  try {
+    const entries = await fs.readdir(SEED_ASSETS_DIR, { withFileTypes: true })
+    return entries
+      .filter((entry) => entry.isFile())
+      .map((entry) => entry.name)
+      .filter((name) => IMAGE_EXTENSIONS.has(path.extname(name).toLowerCase()))
+      .sort()
+  } catch (err) {
+    if ((err as NodeJS.ErrnoException).code === 'ENOENT') {
+      return []
+    }
+    throw err
+  }
+}
+
+async function findMediaByFilenames(payload: PayloadClient, filenames: string[]) {
+  const existing = await payload.find({
+    collection: 'media',
+    where: {
+      or: filenames.map((filename) => ({ filename: { equals: filename } })),
+    },
+    limit: 1,
+    pagination: false,
+  })
+  return existing.docs[0] ?? null
+}
+
+async function upsertMediaFromFile(args: {
+  alt: string
+  filename: string
+  payload: PayloadClient
+}): Promise<{ doc: { filename?: string | null; url?: string | null }; status: 'created' | 'exists' }> {
+  const { alt, filename, payload } = args
+  const existing = await findMediaByFilenames(payload, getStoredFilenameCandidates(filename))
+  if (existing) {
+    return { doc: existing, status: 'exists' }
+  }
+  if (!process.env.S3_ACCESS_KEY_ID?.trim()) {
+    throw new Error(
+      'Seeding media requires S3 credentials. Set S3_BUCKET, S3_REGION, S3_ACCESS_KEY_ID, S3_SECRET_ACCESS_KEY, and S3_ENDPOINT.',
+    )
+  }
+  const data = await fs.readFile(path.join(SEED_ASSETS_DIR, filename))
+  const file: SeedMediaFile = {
+    data,
+    mimetype: getMimeTypeFromFilename(filename),
+    name: filename,
+    size: data.byteLength,
+  }
+  const created = await payload.create({
+    collection: 'media',
+    data: { alt },
+    file,
+    overrideAccess: true,
+  })
+  return { doc: created, status: 'created' }
 }
 
 const locationsSeed = [
@@ -271,6 +374,14 @@ async function run() {
   const seedMode = process.env.SEED_MODE?.trim() || 'local'
   console.log(`Seed mode: ${seedMode}`)
   console.log(`Database: ${redactMongoUrl(databaseUrl)}`)
+  console.log(
+    `S3 prefix: ${process.env.S3_PREFIX || '(default)'} → ${process.env.S3_ENDPOINT || '(no endpoint)'}`,
+  )
+  if (process.env.VERCEL && !process.env.S3_ACCESS_KEY_ID) {
+    throw new Error(
+      'Seeding on Vercel requires S3 credentials. Set S3_BUCKET, S3_REGION, S3_ACCESS_KEY_ID, S3_SECRET_ACCESS_KEY, and S3_ENDPOINT, then redeploy and seed again.',
+    )
+  }
 
   // Dynamic import so payload.config reads env after loadEnvFiles()
   const { default: config } = await import('../src/payload.config')
@@ -338,9 +449,33 @@ async function run() {
     console.log(`  brand ${brand.slug}: ${status}`)
   }
 
+  console.log('Seeding media…')
+  const assetFiles = await listSeedAssetFiles()
+  const hasSkincareAsset = assetFiles.some((name) => name.toLowerCase() === SKINCARE_FILENAME)
+  if (!hasSkincareAsset) {
+    console.warn(
+      `  missing ${SKINCARE_FILENAME} in scripts/seed-assets — dermokozmetika keeps /images/skincare.jpg`,
+    )
+  }
+  const mediaByFilename = new Map<string, { url?: string | null }>()
+  for (const filename of assetFiles) {
+    const result = await upsertMediaFromFile({
+      alt: getAltFromFilename(filename),
+      filename,
+      payload,
+    })
+    console.log(`  media ${filename}: ${result.status} (${result.doc.filename ?? filename})`)
+    mediaByFilename.set(filename.toLowerCase(), result.doc)
+  }
+  const skincareImagePath = mediaByFilename.get(SKINCARE_FILENAME)?.url
+
   console.log('Seeding services…')
   for (const service of servicesSeed) {
-    const status = await upsertByField(payload, 'services', 'slug', service.slug, service)
+    const data =
+      service.slug === 'dermokozmetika' && skincareImagePath
+        ? { ...service, imagePath: skincareImagePath }
+        : service
+    const status = await upsertByField(payload, 'services', 'slug', service.slug, data)
     console.log(`  service ${service.slug}: ${status}`)
   }
 

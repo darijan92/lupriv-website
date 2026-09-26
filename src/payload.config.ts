@@ -1,5 +1,6 @@
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { s3Storage } from '@payloadcms/storage-s3'
 import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
@@ -13,6 +14,7 @@ import { Services } from './collections/Services'
 import { ProductCategories } from './collections/ProductCategories'
 import { Pages } from './collections/Pages'
 import { SiteSettings } from './globals/SiteSettings'
+import { buildS3FileUrl } from './lib/build-s3-file-url'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -45,7 +47,31 @@ export default buildConfig({
   },
   db: mongooseAdapter({
     url: databaseURL,
+    // Keep pools tiny on Vercel — each serverless instance opens its own pool.
+    connectOptions: {
+      maxPoolSize: 10,
+      minPoolSize: 0,
+      maxIdleTimeMS: 10000,
+    },
   }),
   sharp,
-  plugins: [],
+  plugins: [
+    s3Storage({
+      collections: {
+        media: {
+          prefix: process.env.S3_PREFIX || 'uploads/media',
+          disablePayloadAccessControl: true,
+          generateFileURL: ({ filename, prefix }) => buildS3FileUrl({ filename, prefix }),
+        },
+      },
+      bucket: process.env.S3_BUCKET as string,
+      config: {
+        region: process.env.S3_REGION,
+        credentials: {
+          accessKeyId: process.env.S3_ACCESS_KEY_ID as string,
+          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY as string,
+        },
+      },
+    }),
+  ],
 })

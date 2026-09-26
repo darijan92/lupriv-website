@@ -19,6 +19,9 @@ Kopiraj `.env.example` u `.env.local` i postavi:
 | `DATABASE_URL` | **Lokalno (Docker):** `mongodb://127.0.0.1:27018/lupriv-website` (compose mapira host 27018→27017; 27017 je često zauzet) · **Produkcija (Atlas):** `mongodb+srv://USER:PASS@CLUSTER/lupriv-website?retryWrites=true&w=majority` |
 | `PAYLOAD_SECRET` | Dugi nasumični string (obavezno) |
 | `NEXT_PUBLIC_SERVER_URL` | npr. `http://localhost:3456` |
+| `S3_BUCKET` / `S3_REGION` / `S3_ACCESS_KEY_ID` / `S3_SECRET_ACCESS_KEY` | AWS S3 za Payload Media (lokalni disk je isključen) |
+| `S3_ENDPOINT` | Javni virtual-hosted URL bucketa, npr. `https://your-bucket.s3.eu-central-1.amazonaws.com/` |
+| `S3_PREFIX` | Opcionalno — object prefix, npr. `lupriv/dev` (default `uploads/media`) |
 | `PAYLOAD_ADMIN_EMAIL` / `PAYLOAD_ADMIN_PASSWORD` | Opcionalno — seed kreira prvog admina |
 | `SEED_MODE` | Opcionalno — samo label u logu (`local` / `production`) |
 
@@ -53,6 +56,8 @@ Zaustavljanje: `docker compose down` (volume `lupriv_mongo_data` ostaje).
    - `DATABASE_URL` = Atlas `mongodb+srv://…` (s auth)
    - `PAYLOAD_SECRET`
    - `NEXT_PUBLIC_SERVER_URL` = produkcijski URL
+   - `S3_BUCKET`, `S3_REGION`, `S3_ACCESS_KEY_ID`, `S3_SECRET_ACCESS_KEY`, `S3_ENDPOINT`
+   - opcionalno `S3_PREFIX` (npr. `lupriv/prod`)
 4. Seed produkcijske baze (oprezno, idempotentno):
 
 ```bash
@@ -67,7 +72,7 @@ SEED_MODE=production pnpm seed
 cd ~/privateProjects/lupriv-website
 pnpm install
 docker compose up -d
-pnpm seed          # idempotentni upserti (lokacije, brandovi, stranice, postavke)
+pnpm seed          # idempotentni upserti (CMS + Media na S3 iz scripts/seed-assets/)
 pnpm dev           # http://localhost:3456
 ```
 
@@ -101,7 +106,7 @@ pnpm generate:importmap
 - `src/app/(frontend)/` — javni site
 - `src/app/(payload)/` — admin + REST/GraphQL API
 - `src/lib/payload.ts` — Local API helperi (`unstable_cache`, revalidate ~60s)
-- `scripts/seed.ts` — idempotentni seed (`pnpm seed`)
+- `scripts/seed.ts` — idempotentni seed (`pnpm seed`); slike iz `scripts/seed-assets/` idu na S3
 - `docker-compose.yml` — lokalni MongoDB 7
 
 Sadržaj je **CMS-upravljan**. Ne spominji Pharm/Pharma na javnim stranicama. Jezik: hrvatski.
